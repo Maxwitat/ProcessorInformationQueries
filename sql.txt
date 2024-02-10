@@ -1,0 +1,50 @@
+select v_Add_Remove_Programs.DisplayName0, count(*) from v_Add_Remove_Programs	
+left join v_R_System as sys on sys.ResourceID = v_Add_Remove_Programs.ResourceID	
+where (v_Add_Remove_Programs.DisplayName0 like 'Microsoft SQL Server 2008' or	
+v_Add_Remove_Programs.DisplayName0 like 'Microsoft SQL Server 2012' or	
+v_Add_Remove_Programs.DisplayName0 like 'Microsoft SQL Server 2012 (64-bit)' or	
+v_Add_Remove_Programs.DisplayName0 like 'Microsoft SQL Server 2014' or	
+v_Add_Remove_Programs.DisplayName0 like 'Microsoft SQL Server 2014 (64-bit)' or	
+v_Add_Remove_Programs.DisplayName0 like 'Microsoft SQL Server 2016 (64-bit)' or	
+v_Add_Remove_Programs.DisplayName0 like 'Microsoft SQL Server 2017 (64-bit)' or	
+v_Add_Remove_Programs.DisplayName0 like 'Microsoft SQL Server 2019 (64-bit)' or	
+v_Add_Remove_Programs.DisplayName0 like 'Microsoft SQL Server 2022 (64-bit)')	
+group by  v_Add_Remove_Programs.DisplayName0	
+
+select distinct fcm.Name as [Machine Name], arp.DisplayName0, sys.Active0 , WS.LastHWScan as [Last Inventory], 
+sys.CPUType0 as [CPU Type], p.Name0 as [Name],
+(Select count(SystemName0) from v_GS_PROCESSOR where Systemname0 = fcm.Name group by SystemName0) as [# Processors (Sockets)],
+p.NumberOfCores0 as [# Cores],p.NumberOfLogicalProcessors0 as [# Logical Processors]
+from v_GS_PROCESSOR P ,v_FullCollectionMembership fcm
+left join v_GS_OPERATING_SYSTEM as OS on OS.ResourceID = fcm.ResourceID
+left join v_R_System as sys  on sys.ResourceID = fcm.ResourceID
+left join v_GS_COMPUTER_SYSTEM as cs on cs.ResourceID = fcm.ResourceID
+left join  v_GS_WORKSTATION_STATUS as WS on WS.ResourceID = fcm.ResourceID
+left join v_Add_Remove_Programs as arp on arp.ResourceID = fcm.ResourceID 
+where (fcm.ResourceID=p.ResourceID
+and fcm.CollectionID='SMSDM003'
+and (arp.DisplayName0 like 'Microsoft SQL Server 2008' or
+arp.DisplayName0 like 'Microsoft SQL Server 2012' or
+arp.DisplayName0 like 'Microsoft SQL Server 2012 (64-bit)' or
+arp.DisplayName0 like 'Microsoft SQL Server 2014' or
+arp.DisplayName0 like 'Microsoft SQL Server 2014 (64-bit)' or
+arp.DisplayName0 like 'Microsoft SQL Server 2016 (64-bit)' or
+arp.DisplayName0 like 'Microsoft SQL Server 2017 (64-bit)' or
+arp.DisplayName0 like 'Microsoft SQL Server 2019 (64-bit)' or
+arp.DisplayName0 like 'Microsoft SQL Server 2022 (64-bit)')
+)
+order by fcm.name
+
+select v_Add_Remove_Programs.DisplayName0, count(*) from v_Add_Remove_Programs	
+left join v_R_System as sys on sys.ResourceID = v_Add_Remove_Programs.ResourceID	
+where (v_Add_Remove_Programs.DisplayName0 like 'Microsoft SQL Server 2008' or	
+v_Add_Remove_Programs.DisplayName0 like 'Microsoft SQL Server 2012' or	
+v_Add_Remove_Programs.DisplayName0 like 'Microsoft SQL Server 2012 (64-bit)' or	
+v_Add_Remove_Programs.DisplayName0 like 'Microsoft SQL Server 2014' or	
+v_Add_Remove_Programs.DisplayName0 like 'Microsoft SQL Server 2014 (64-bit)' or	
+v_Add_Remove_Programs.DisplayName0 like 'Microsoft SQL Server 2016 (64-bit)' or	
+v_Add_Remove_Programs.DisplayName0 like 'Microsoft SQL Server 2017 (64-bit)' or	
+v_Add_Remove_Programs.DisplayName0 like 'Microsoft SQL Server 2019 (64-bit)' or	
+v_Add_Remove_Programs.DisplayName0 like 'Microsoft SQL Server 2022 (64-bit)')	
+group by  v_Add_Remove_Programs.DisplayName0	
+
